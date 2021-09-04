@@ -1,0 +1,11 @@
+flask
+flask-sqlalchemy
+numpy
+pandas
+uvicorn
+sqlalchemy<=1.3.24
+fastapi
+starlette
+bcrypt
+passlib
+PyJWT
