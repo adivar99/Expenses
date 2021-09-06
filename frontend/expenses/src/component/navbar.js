@@ -1,6 +1,8 @@
-import { AppBar, Button, Link, React, ToolBar,useDispatch,useHistory,useSelector } from './index'
+import { AppBar, Button, Link, React, ToolBar, useDispatch, useHistory, useSelector } from './index'
 import {makeStyles} from '@material-ui/core/styles';
 import { useLocation } from 'react-router-dom';
+import { doLogOut } from '../auth/authDispatcher';
+import { Toolbar, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     '@global': {
@@ -37,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-function navbar(props) {
+function Navbar(props) {
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
@@ -52,8 +54,56 @@ function navbar(props) {
     const isNotLoggedIn = !isLoggedIn
 
     const allMenus = [
-        {url: "/dashboard"}
+        {url: "/dashboard", label: "Dashboard", rule: isLoggedIn},
+        {url: "/personal", label: "Personal", rule: isLoggedIn},
+        {url: "/stock", label: "Stock", rule: isLoggedIn},
     ]
+
+    const currentPath = location.pathname
+
+    const menusToBeDisplayed = allMenus.filter(value => value.rule).map(item=>{
+        const menuClassName = (item.url == currentPath)? classes.activeLink: classes.link;
+        return {...item, menuClassName}
+    })
+
+    return (
+        <React.Fragment>
+            <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
+                <Toolbar className={classes.toolbar}>
+                    <img src="#" height="30" alt="Expenses"/>
+                    <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
+                        &nbsp;
+
+                        <Button component={Link} variant="text" to="/" className={classes.link}>
+                            Expenses
+                        </Button>
+                    </Typography>
+
+                    <nav>
+                        {menusToBeDisplayed.map((item, index) => {
+                            return (
+                                <Button key={index} component={Link} variant="text" color="primary" to={item.url} className={item.menuClassName}>
+                                    {item.label}
+                                </Button>
+                            );
+                        })}
+                    </nav>
+
+                    {(isLoggedIn) ?
+                        <Button id="btnlogout" onClick={logout} color="secondary" variant="outlined" className={classes.link}>
+                            Logout
+                        </Button> : <div>
+                            <Button component={Link} to="/login" color="secondary" variant="outlined" className={classes.link}>
+                                Login
+                            </Button>
+                            <Button component={Link} to="/register" color="primary" variant="outlined" className={classes.link}>
+                                Register
+                            </Button></div>
+                    }
+                </Toolbar>
+            </AppBar>
+        </React.Fragment>
+    )
 }
 
-export default navbar
+export default Navbar;

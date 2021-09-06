@@ -1,4 +1,4 @@
-import {CssBaseline, makeStyles, ReactChild, Route, Router, Switch, UINavBar} from './component';
+import {CssBaseline, makeStyles, ReactChild, Route, Router, Switch, NavBar} from './component';
 import { useSelector } from 'react-redux';
 import React, { useEffect } from 'react';
 import { setAuthToken } from './auth/authDispatcher';
@@ -9,6 +9,7 @@ import LoadingIndicatorComponent from './shared/loader/loading-indicator-compone
 import Login from './auth/Login';
 import { Redirect } from 'react-router-dom';
 import AppNotificationComponent from './shared/notification/app-notification-component';
+import Profile from './profile/Profile';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -48,7 +49,7 @@ function App() {
 
     return (<React.Fragment>
         <LoadingIndicatorComponent></LoadingIndicatorComponent>
-        <UINavBar />
+        <NavBar />
         <ConfirmMessageComponent />
         <Switch>
             <Route path="/login">
@@ -58,6 +59,9 @@ function App() {
                 <Register />
             </Route>
             <GuardedRoute path="/profile" component={Profile} auth={isLoggedIn} />
+            <Route path="/">
+                <Redirect to={homePage} />
+            </Route>
         </Switch>
         <AppNotificationComponent/>
     </React.Fragment>

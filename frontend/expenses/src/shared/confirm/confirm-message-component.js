@@ -99,7 +99,7 @@ class ConfirmMessageComponent extends Component {
 
         return <Fragment>
 
-            {show == true && <div className="confirm-message-container ">
+            {show === true && <div className="confirm-message-container ">
 
                 <div className="confirm-message-inner-container">
                     <div>

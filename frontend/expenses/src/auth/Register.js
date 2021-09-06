@@ -63,7 +63,7 @@ function Register() {
     const [password, setPassword] = useState('password');
     const [cpassword, setCPassword] = useState('password');
 
-    const [isAgreed, setIdAgreed] = useState(false);
+    const [isAgreed, setIsAgreed] = useState(false);
 
 
     function callObservable(subscriberMethod, callback) {

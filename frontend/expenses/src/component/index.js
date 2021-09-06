@@ -24,7 +24,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import {BrowserRouter as Router, Link, Route, Switch, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux"
 import { makeStyles } from '@material-ui/core';
-import UINavBar from "./navbar"
+import { CssBaseline } from '@material-ui/core';
+import NavBar from "./Navbar"
 
 export {
     AppBar,
@@ -33,6 +34,7 @@ export {
     Button,
     Checkbox,
     Container,
+    CssBaseline,
     FormControl,
     FormLabel,
     Grid,
@@ -55,7 +57,7 @@ export {
     TextField,
     Typography,
     ToolBar,
-    UINavBar,
+    NavBar,
     useDispatch,
     useEffect,
     useHistory,

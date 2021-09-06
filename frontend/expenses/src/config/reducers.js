@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import auth, {LOGOUT} from '../auth/authStore';
-import authority from '../authority/store/authorityStore';
+// import authority from '../authority/store/authorityStore';
 
 const appReducer = combineReducers({
     auth,
-    authority
+    // authority
 })
 
 export default (state, action) => {
