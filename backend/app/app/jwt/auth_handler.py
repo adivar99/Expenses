@@ -6,7 +6,7 @@ from app.core import config
 
 def token_response(token: str):
     return {
-        "access_token": token
+        "token": token
     }
 
 def signJWT(user_id: str) -> Dict[str, str]:
@@ -20,7 +20,8 @@ def signJWT(user_id: str) -> Dict[str, str]:
 def decodeJWT(token: str):
     try:
         decoded_token = jwt.decode(token, config.SECRET_KEY, algorithms=[config.ALGORITHM])
-        print("decoded_token:", decoded_token)
+        # print("decoded_token:", decoded_token, datetime.utcnow())
+        # print("condition:", datetime.strptime(decoded_token['expires'], "%d-%m-%YT%H:%M:%S") > datetime.utcnow())
         return decoded_token if datetime.strptime(decoded_token['expires'], "%d-%m-%YT%H:%M:%S") > datetime.utcnow() else None
     except Exception as e:
         print(e)
