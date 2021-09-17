@@ -5,8 +5,10 @@ from typing import List, Optional
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 import sqlite3
-from fastapi import HTTPException, Depends, APIRouter, status
+from fastapi import HTTPException, Depends, APIRouter, status, Request
 
+from app.jwt.auth_bearer import JWTBearer
+from app.jwt.auth_handler import decodeJWT, signJWT
 from app.models.user import User as model, UserCreate, UserInDB, UserLogin, UserUpdate
 from app.crud.user import create, delete, get_all, check_user
 from app.crud.user import update, get_by_username, get_by_id, get_by_email
@@ -39,11 +41,11 @@ def get_all_users(db_session: Session = Depends(get_db)):
     response_model=model
 )
 def get_details(req: Request, db_session: Session = Depends(get_db)):
-    print(req.headers['authorization'])
+    # print(req.headers['authorization'])
     token = req.headers['authorization'].split()[1]
     uid = decodeJWT(token)["user_id"]
     _user = get_by_email(db_session, uid)
-    print(uid, _user)
+    # print(uid, _user)
     data = {
         "id": _user.id,
         "name": _user.name,
@@ -51,7 +53,7 @@ def get_details(req: Request, db_session: Session = Depends(get_db)):
         "email": _user.email
     }
     ret = JSONResponse(status_code=200, content=data)
-    print(ret, ret.__dict__)
+    # print(ret, ret.__dict__)
     return ret
 
 @router.post("/login")
@@ -67,11 +69,22 @@ async def user_login(user: UserLogin, db_session: Session = Depends(get_db)):
             "error": "Wrong login details"
         }
 
+@router.get(
+    "/details",
+    dependencies=[Depends(JWTBearer())],
+    response_model=model
+)
+def details(request: Request, db_session: Session = Depends(get_db)):
+    token = request.headers['authorization'].split()[1]
+    user_id = decodeJWT(token)['user_id']
+    user = get_by_email(db_session, user_id)
+    return user
+
 
 @router.get(
     "/getUsername/{username}",
     dependencies=[Depends(JWTBearer())],
-    response_model=model
+    response_model=UserInDB
 )
 def get_user_by_username(username: str, db_session: Session = Depends(get_db)):
     _user = get_by_username(db_session, username)

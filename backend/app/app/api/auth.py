@@ -13,7 +13,7 @@ router = APIRouter()
 
 @router.post("/login")
 async def user_login(user: UserLogin, db_session: Session = Depends(get_db)):
-    print(user, user.__dict__)
+    # print(user, user.__dict__)
     if check_user(db_session, user):
         if not valid_email(user.username):
             _user = get_by_username(db_session, user.username)
@@ -21,10 +21,7 @@ async def user_login(user: UserLogin, db_session: Session = Depends(get_db)):
             _user = get_by_email(db_session, user.username)
         return JSONResponse(status_code=200,content=signJWT(_user.email))
     else:
-        return JSONResponse(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            content={"msg":"Invalid User Credentials"}
-        )
+        return HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid User credentials")
 
 
 @router.post(

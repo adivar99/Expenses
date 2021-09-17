@@ -2,16 +2,10 @@ import {
     Button,
     Checkbox,
     Container,
-    FormControl,
-    FormControllLabel,
-    FormLabel,
     Grid,
     Link,
     makeStyles,
-    Radio,
-    RadioGroup,
     React,
-    Snackbar,
     TextField,
     Typography,
     useHistory,
@@ -21,8 +15,7 @@ import { appNotification } from "../shared/notification/app-notification";
 import { doRegisterUser } from "./authDispatcher";
 import { LOGIN } from "./authStore";
 import {useDispatch} from "react-redux";
-import { FormControlLabel, InputLabel } from "@material-ui/core";
-import { Select } from "@material-ui/core";
+import { FormControlLabel } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -54,8 +47,6 @@ function Register() {
     const classes = useStyles();
     const history = useHistory();
     const dispatch = useDispatch()
-    const [open, setOpen] = React.useState(false);
-    const [error_message, set_error_message] = React.useState(false);
 
     const [username, setUsername] = useState('jdoe21');
     const [name, setName] = useState("John Doe");

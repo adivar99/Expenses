@@ -3,6 +3,7 @@ import http from "../shared/services/http-service.js";
 import {concatMap, map} from "rxjs/operators";
 import { LOGOUT } from "./authStore";
 import { getAsUser } from "./user";
+import { appNotification } from "../shared/notification/app-notification";
 
 export const doLogin = (loginRequest) => {
 
@@ -30,11 +31,11 @@ export const doRegisterUser = (registerRequest) => {
     return http.post(url, registerRequest)
     .pipe(
         concatMap((response) => {
-            const loginReqeust = {};
+            const loginRequest = {};
 
-            loginReqeust.username = registerRequest.username;
-            loginReqeust.password = registerRequest.password;
-            return doLogin(loginReqeust)
+            loginRequest.username = registerRequest.username;
+            loginRequest.password = registerRequest.password;
+            return doLogin(loginRequest)
         })
     );
 }

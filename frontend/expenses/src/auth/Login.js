@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import environment from "../environment";
 import {clearAuthToken, doLogin} from "./authDispatcher";
-import LOGIN from "./authStore";
+import { LOGIN } from "./authStore";
 import {appNotification} from "../shared/notification/app-notification";
 // import { CssBaseline, Grid, TextField, Typography } from "@material-ui/core";
 
@@ -59,16 +59,15 @@ function Login(props) {
 
         const loginUrl = environment.baseUrl + "/auth/login"
 
-        callObservable(doLogin(loginRequest), (response) =>{
+        callObservable(doLogin(loginRequest), (response)=>{
 
-                const currentUser = response.username
+                const currentUser = response.user
                 const token = response.token
 
                 console.log("response:");
                 console.log(response);
 
                 dispatch({type: LOGIN, "payload": response});
-
                 history.push("/profile")
             })
         }

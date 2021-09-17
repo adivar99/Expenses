@@ -24,12 +24,12 @@ class JWTBearer(HTTPBearer):
         isTokenValid: bool = False
 
         try:
-            print("jwtoken: ", jwtoken)
+            # print("jwtoken: ", jwtoken)
             payload = decodeJWT(jwtoken)
         except:
             payload = None
         
-        print("payload:", payload)
+        # print("payload:", payload)
         
         if payload:
             isTokenValid = True

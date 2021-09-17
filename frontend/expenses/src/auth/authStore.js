@@ -14,7 +14,7 @@ export const initialState = {
 const loginUser = (state,action)=>{
     let updatedState = {}
     if(action?.payload?.user){
-        console.log(action);
+        // console.log(action);
         updatedState={isLoggedIn: true, token: action.payload.token, user: action.payload.user}
     }
     return { ...state, ...updatedState}

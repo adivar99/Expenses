@@ -1,4 +1,5 @@
 import { AppBar, Button, Link, React, ToolBar, useDispatch, useHistory, useSelector } from './index'
+import AssessmentIcon from '@material-ui/icons/Assessment'
 import {makeStyles} from '@material-ui/core/styles';
 import { useLocation } from 'react-router-dom';
 import { doLogOut } from '../auth/authDispatcher';
@@ -70,12 +71,11 @@ function Navbar(props) {
         <React.Fragment>
             <AppBar position="static" color="default" elevation={0} className={classes.appBar}>
                 <Toolbar className={classes.toolbar}>
-                    <img src="#" height="30" alt="Expenses"/>
                     <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
                         &nbsp;
 
                         <Button component={Link} variant="text" to="/" className={classes.link}>
-                            Expenses
+                            <AssessmentIcon />Expenses
                         </Button>
                     </Typography>
 

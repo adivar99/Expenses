@@ -28,16 +28,16 @@ function Profile() {
 
     const profileData = [
         {
-            label: "First Name",
-            value: user.firstName
+            label: "Name",
+            value: user.name
         },
         {
             label: "Email",
             value: user.email
         },
         {
-            label: "Role",
-            value: user.role
+            label: "Username",
+            value: user.username
         }
     ]
 
@@ -45,12 +45,12 @@ function Profile() {
         <React.Fragment>
             <Container maxWidth="md" component="main" className={classes.heroContent}>
                 <h1>
-                    Hi {user.userRole === "doctor" ? "Dr." : null} {user.firstName}, your  Profile Details
+                    Hi {user.name}, your  Profile Details
             </h1>
                 <hr />
             </Container>
             <Container maxWidth="md">
-                <Grid justify="center"
+                <Grid justifyContent="center"
                     container>
                     <Grid md={8} item>
                         <TableContainer component={Paper}>
