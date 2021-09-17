@@ -71,7 +71,7 @@ function Register() {
             .subscribe((response) => {
                 callback(response)
             }, (error => {
-                appNotification.showError(error)
+                appNotification.showError(error.toString())
             }))
     }
 

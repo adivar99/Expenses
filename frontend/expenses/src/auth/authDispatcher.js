@@ -41,7 +41,7 @@ export const doRegisterUser = (registerRequest) => {
 
 const getMyDetailsWithToken = (token) => {
 
-    const url = environment.baseUrl + "/user/details";
+    const url = environment.baseUrl + "/user/details/";
     setAuthToken(token)
 
     return http.get(url).pipe(
@@ -50,6 +50,8 @@ const getMyDetailsWithToken = (token) => {
             const authInfo = []
             authInfo.token = token;
             authInfo.user = getAsUser(userObject);
+
+            console.log(authInfo)
             return authInfo
         })
     );

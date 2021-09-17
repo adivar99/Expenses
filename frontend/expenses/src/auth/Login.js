@@ -39,34 +39,38 @@ function Login(props) {
     const [username, set_username] = useState("")
     const [password, set_password] = useState("")
 
-
-
-
-
+    function callObservable(subscriberMethod, callback) {
+        subscriberMethod
+            .subscribe((response) => {
+                callback(response)
+            }, (error => {
+                appNotification.showError(error.toString())
+            }))
+    }
 
 
     async function login(event) {
         event.preventDefault();
-        console.log("userName",username)
-        const payload = {
-            username,
-            password
-        }
+        console.log("userName", username)
+        const loginRequest = {}
+        
+        loginRequest.username = username;
+        loginRequest.password = password;
 
         const loginUrl = environment.baseUrl + "/auth/login"
 
-        doLogin(payload)
-            .subscribe( (response) =>{
+        callObservable(doLogin(loginRequest), (response) =>{
 
                 const currentUser = response.username
                 const token = response.token
 
+                console.log("response:");
+                console.log(response);
+
                 dispatch({type: LOGIN, "payload": response});
 
                 history.push("/profile")
-            },(error => {
-                appNotification.showError(error)
-            }))
+            })
         }
 
         return  (
@@ -77,42 +81,48 @@ function Login(props) {
                         Login in
                     </Typography>
                     <form className={classes.form} onSubmit={login} noValidate>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="username"
-                            label="Username"
-                            name="username"
-                            autoComplete="username"
-                            autoFocus
-                            value={username}
-                            onInput={e => {
-                                set_username(e.target.value)
-                            }}
-                        />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            value={password}
-                            onInput={e => set_password(e.target.value)}
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="secondary"
-                            className={classes.submit}
-                        >
-                            Sign In
-                        </Button>
+                        <Grid item xs="12">
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="username"
+                                label="Username"
+                                name="username"
+                                autoComplete="username"
+                                autoFocus
+                                value={username}
+                                onInput={e => {
+                                    set_username(e.target.value)
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs="12">
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                value={password}
+                                onInput={e => set_password(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs="12">
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                color="secondary"
+                                className={classes.submit}
+                            >
+                                Sign In
+                            </Button>
+                        </Grid>
                         <Grid container>
                             <Link href="#" to="/register" variant="body2">
                                 {"Dont have an account? Sign Up"}

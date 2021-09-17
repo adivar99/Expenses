@@ -32,7 +32,7 @@ class AppNotificationComponent extends Component {
     onNotificationReceived(res) {
 
 
-        console.log("showing")
+        console.log("showing:" + res)
 
             this.setState({
                 "show": true,

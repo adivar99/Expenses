@@ -32,8 +32,6 @@ def get_by_username(db_session: Session, username: str) -> Optional[model]:
     """
     Return user by user name
     """
-    for user in get_all(db_session):
-        print(username.lower(), user.username.lower(), username.lower()==user.username.lower())
     return (
         db_session.query(db_model)
         .filter(db_model.username == username)
@@ -58,7 +56,7 @@ def get_ids(db_session: Session) -> List[int]:
 
 def check_user(db_session: Session, login: UserLogin) -> bool:
     for user in get_all(db_session):
-        if user.username == login.user_email or user.email == login.user_email:
+        if user.username == login.username or user.email == login.username:
             if verify_password(login.password, user.password):
                 return True
     return False

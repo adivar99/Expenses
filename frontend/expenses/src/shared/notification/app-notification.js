@@ -9,7 +9,7 @@ export const appNotification = {
     },
     showError: (message) => {
         console.log("original  appNotification showError called")
-        subject.next( {title:"Error ",message,"variant":'error'})
+        subject.next( {title:"Error ", "message":message, "variant":'error'})
     },
     onChange: () => subject.asObservable()
 };

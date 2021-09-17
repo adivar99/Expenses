@@ -9,7 +9,7 @@ from app.crud.expense import create, delete, get_all, sum_of_categories
 from app.crud.expense import update, get_by_id, get_by_category, sum_of_category
 from app.utils.utils import get_db
 from app.models.enums import Categories
-from app.auth.auth_bearer import JWTBearer
+from app.jwt.auth_bearer import JWTBearer
 
 router = APIRouter()
 

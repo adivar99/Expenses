@@ -16,7 +16,7 @@ class UserUpdate(UserBase):
     pass
 
 class UserLogin(BaseModel):
-    user_email: str = Field(..., title="User's username or email", example="jdoe21")
+    username: str = Field(..., title="User's username or email", example="jdoe21")
     password: str = Field(..., title="User's password", example="password123")
 
 class UserInDB(UserBase):

@@ -1,6 +1,7 @@
-from app.auth.auth_bearer import JWTBearer
-from app.auth.auth_handler import signJWT
-from typing import List
+from fastapi import Request
+from app.jwt.auth_bearer import JWTBearer
+from app.jwt.auth_handler import decodeJWT, signJWT
+from typing import List, Optional
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
 import sqlite3
@@ -32,13 +33,34 @@ def get_all_users(db_session: Session = Depends(get_db)):
     _users = get_all(db_session)
     return _users
 
+@router.get(
+    "/details/",
+    dependencies=[Depends(JWTBearer())],
+    response_model=model
+)
+def get_details(req: Request, db_session: Session = Depends(get_db)):
+    print(req.headers['authorization'])
+    token = req.headers['authorization'].split()[1]
+    uid = decodeJWT(token)["user_id"]
+    _user = get_by_email(db_session, uid)
+    print(uid, _user)
+    data = {
+        "id": _user.id,
+        "name": _user.name,
+        "username": _user.username,
+        "email": _user.email
+    }
+    ret = JSONResponse(status_code=200, content=data)
+    print(ret, ret.__dict__)
+    return ret
+
 @router.post("/login")
 async def user_login(user: UserLogin, db_session: Session = Depends(get_db)):
     if check_user(db_session, user):
-        if not valid_email(user.user_email):
-            _user = get_by_username(db_session, user.user_email)
+        if not valid_email(user.username):
+            _user = get_by_username(db_session, user.username)
         else:
-            _user = get_by_email(db_session, user.user_email)
+            _user = get_by_email(db_session, user.username)
         return signJWT(_user.email)
     else:
         return {

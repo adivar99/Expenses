@@ -8,7 +8,11 @@ from app.core import config
 
 # from db import base
 
-engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
+engine = create_engine(
+    config.SQLALCHEMY_DATABASE_URI,
+    connect_args={'check_same_thread': False}
+)
+
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
 Session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
