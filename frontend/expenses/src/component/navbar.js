@@ -50,7 +50,7 @@ function Navbar(props) {
     }
 
     const classes = useStyles();
-    const {user, token, isLoggedIn, roles} = useSelector(state => state.auth);
+    const {isLoggedIn, token, user} = useSelector(state => state.auth);
 
     const isNotLoggedIn = !isLoggedIn
 

@@ -13,7 +13,7 @@ from app.models.user import User as model, UserCreate, UserInDB, UserLogin, User
 from app.crud.user import create, delete, get_all, check_user
 from app.crud.user import update, get_by_username, get_by_id, get_by_email
 from app.crud.expense import get_by_user
-from app.utils.utils import get_db, valid_email
+from app.utils.utils import get_current_user_from_token, get_db, valid_email
 
 router = APIRouter()
 
@@ -41,11 +41,7 @@ def get_all_users(db_session: Session = Depends(get_db)):
     response_model=model
 )
 def get_details(req: Request, db_session: Session = Depends(get_db)):
-    # print(req.headers['authorization'])
-    token = req.headers['authorization'].split()[1]
-    uid = decodeJWT(token)["user_id"]
-    _user = get_by_email(db_session, uid)
-    # print(uid, _user)
+    _user = get_current_user_from_token(req, db_session)
     data = {
         "id": _user.id,
         "name": _user.name,

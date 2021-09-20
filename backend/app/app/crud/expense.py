@@ -1,10 +1,10 @@
-from app.models.user import UserInDB
 from sqlalchemy.orm import Session
 from typing import Optional, List
 from sqlalchemy.sql import func
 from fastapi.exceptions import HTTPException
 from starlette import status
 
+from app.models.user import UserInDB
 from app.db_models.expense import Expense as db_model
 from app.models.expense import Expense as model, ExpenseCreate, ExpenseInDB, ExpenseUpdate
 from app.utils.utils import get_randID
@@ -46,9 +46,10 @@ def sum_of_category(db_session: Session, category: Categories):
         .first()
     )
 
-def sum_of_categories(db_session: Session):
+def sum_of_categories(db_session: Session, user: UserInDB):
     return (
-        db_session.query(func.sum(db_model.amount))
+        db_session.query(db_model.category, func.sum(db_model.amount))
+        .filter(db_model.user_id == user.id)
         .group_by(db_model.category)
         .all()
     )

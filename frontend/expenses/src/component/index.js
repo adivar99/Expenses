@@ -26,12 +26,14 @@ import {useDispatch, useSelector} from "react-redux"
 import { makeStyles } from '@material-ui/core';
 import { CssBaseline } from '@material-ui/core';
 import NavBar from "./Navbar"
+import { PieSeries, Chart, Title} from '@devexpress/dx-react-chart-material-ui';
 
 export {
     AppBar,
     Avatar,
     Box,
     Button,
+    Chart,
     Checkbox,
     Container,
     CssBaseline,
@@ -41,6 +43,7 @@ export {
     Link,
     makeStyles,
     Paper,
+    PieSeries,
     Radio,
     RadioGroup,
     React,
@@ -55,6 +58,7 @@ export {
     TableHead,
     TableRow,
     TextField,
+    Title,
     Typography,
     ToolBar,
     NavBar,

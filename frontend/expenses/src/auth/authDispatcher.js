@@ -14,10 +14,10 @@ export const doLogin = (loginRequest) => {
         );
 }
 
-export const getToken = (loginReqeust) => {
+export const getToken = (loginRequest) => {
     const url = environment.baseUrl + "/auth/login"
 
-    return http.post(url, loginReqeust)
+    return http.post(url, loginRequest)
         .pipe(
             map((response) => {
                 return response.token
