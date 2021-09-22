@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from sqlalchemy.orm import Session
 from typing import Optional, List
 from sqlalchemy.sql import func
@@ -8,7 +9,7 @@ from app.models.user import UserInDB
 from app.db_models.expense import Expense as db_model
 from app.models.expense import Expense as model, ExpenseCreate, ExpenseInDB, ExpenseUpdate
 from app.utils.utils import get_randID
-from app.models.enums import Categories
+from app.models.enums import Categories, StartTimePeriods
 
 def get_by_id(db_session: Session, id: int):
     """
@@ -29,30 +30,64 @@ def get_all(db_session: Session):
         .all()
     )
 
-def get_by_category(db_session: Session, category: Categories) -> List[model]:
+def get_by_category(db_session: Session, category: Categories, period: StartTimePeriods = StartTimePeriods.NONE) -> List[model]:
     """
     Return expense by category
     """
-    return (
+    query = (
         db_session.query(db_model)
         .filter(db_model.category == category)
+    )
+    if period != StartTimePeriods.NONE:
+        start_date = date.today() - timedelta(days=int(period))
+        query = query.filter(db_model.date >= start_date)
+    
+    return query.all()
+
+def get_by_date(db_session: Session, period: StartTimePeriods, user: UserInDB):
+    """
+    Return Expense by date
+    """
+    start_date = date.today() - timedelta(days=int(period))
+    expenses = (
+        db_session
+        .query(db_model.date, func.sum(db_model.amount).label('sum'))
+        .filter(db_model.user_id == user.id)
+    )
+    if period != StartTimePeriods.NONE:
+        expenses = expenses.filter(db_model.date >= start_date)
+    
+    return (
+        expenses
+        .group_by(db_model.date)
         .all()
     )
 
-def sum_of_category(db_session: Session, category: Categories):
-    return (
+def sum_of_category(db_session: Session, category: Categories, period: StartTimePeriods = StartTimePeriods.NONE):
+    """
+    Return the sum of amounts grouped by categories
+    """
+    query = (
         db_session.query(func.sum(db_model.amount).label("sum"))
         .filter(db_model.category == category)
-        .first()
     )
+    if period != StartTimePeriods.NONE:
+        start_date = date.today() - timedelta(days=int(period))
+        query = query.filter(db_model.date >= start_date)
+    
+    return query.first()
 
-def sum_of_categories(db_session: Session, user: UserInDB):
-    return (
+def sum_of_categories(db_session: Session, user: UserInDB, period: StartTimePeriods = StartTimePeriods.NONE):
+    query = (
         db_session.query(db_model.category, func.sum(db_model.amount))
         .filter(db_model.user_id == user.id)
         .group_by(db_model.category)
-        .all()
     )
+    if period != StartTimePeriods.NONE:
+        start_date = date.today() - timedelta(days=int(period))
+        query = query.filter(db_model.date >= start_date)
+    
+    return query.all()
 
 def get_ids(db_session: Session) -> List[int]:
     expenses = get_all(db_session)

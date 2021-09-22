@@ -3,7 +3,7 @@ import http from "../shared/services/http-service.js";
 import {concatMap, map} from "rxjs/operators";
 import { LOGOUT } from "./authStore";
 import { getAsUser } from "./user";
-import { appNotification } from "../shared/notification/app-notification";
+// import { appNotification } from "../shared/notification/app-notification";
 
 export const doLogin = (loginRequest) => {
 

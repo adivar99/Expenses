@@ -7,6 +7,7 @@ import {
 } from '../component';
 
 import CategoryPie from './cards/CategoryPie';
+import DateLine from './cards/DateLine';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -26,9 +27,8 @@ function Dashboard() {
     return (
         <React.Fragment>
             <Container component="main" className={classes.container}>
-                <Grid>
-                    <CategoryPie />
-                </Grid>
+                <CategoryPie period={7} />
+                <DateLine period={7} />
             </Container>
         </React.Fragment>
     )
