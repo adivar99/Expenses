@@ -40,7 +40,7 @@ function App() {
     let homePage = "/login"
 
     if(isLoggedIn)
-        homePage = "/register"
+        homePage = "/profile"
     
     useEffect(() => {
         if(token && user){

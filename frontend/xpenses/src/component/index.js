@@ -33,7 +33,8 @@ import {
     Title,
     ArgumentAxis,
     ValueAxis,
-    LineSeries
+    LineSeries,
+    BarSeries
 } from '@devexpress/dx-react-chart-material-ui';
 import { Animation } from '@devexpress/dx-react-chart'
 
@@ -42,6 +43,7 @@ export {
     AppBar,
     ArgumentAxis,
     Avatar,
+    BarSeries,
     Box,
     Button,
     Card,

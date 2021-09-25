@@ -28,7 +28,7 @@ function Dashboard() {
         <React.Fragment>
             <Container component="main" className={classes.container}>
                 <CategoryPie period={7} />
-                <DateLine period={7} />
+                {/* <DateLine period={7} /> */}
             </Container>
         </React.Fragment>
     )

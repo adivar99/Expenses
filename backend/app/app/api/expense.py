@@ -6,7 +6,7 @@ from starlette.responses import JSONResponse
 import sqlite3
 from fastapi import HTTPException, Depends, APIRouter, status, Request
 
-from app.models.expense import Expense as model, ExpenseBase, ExpenseCreate, ExpenseInDB, ExpenseUpdate
+from app.models.expense import Expense as model, ExpenseBase, ExpenseByCategory, ExpenseCreate, ExpenseInDB, ExpenseUpdate
 from app.crud.expense import create, delete, get_all, sum_of_categories
 from app.crud.expense import update, get_by_id, get_by_category, sum_of_category
 from app.crud.expense import get_by_date as get_expenses_by_date
@@ -43,6 +43,7 @@ def get_sum_by_categories(req: Request, db_session: Session = Depends(get_db)):
             "sum": expense[1]
         }
         summary.append(jdata)
+    # exp = [ExpenseByCategory(ob) for ob in summary]
     return summary
 
 @router.get("/getByDate/{period}", dependencies=[Depends(JWTBearer())])
@@ -53,11 +54,11 @@ def get_by_date(req: Request, period: StartTimePeriods = StartTimePeriods.WEEK, 
     ret = []
     for expense in _expenses:
         dex = {
-            "date": expense[0],
+            "date": str(expense[0]),
             "sum": expense[1]
         }
         ret.append(dex)
-    return ret
+    return JSONResponse(content=ret)
 
 @router.post("/createExpense", dependencies=[Depends(JWTBearer())], response_model=ExpenseInDB)
 def create_expense(expense_in: ExpenseCreate, db_session: Session = Depends(get_db)):

@@ -13,6 +13,8 @@ import {
 
 import { getDateLineData } from '../cardDispatcher';
 import { appNotification } from '../../shared/notification/app-notification'
+import environment from '../../environment';
+import { getToken } from '../../auth/authDispatcher';
 
 const format = () => tick => tick;
 
@@ -47,34 +49,30 @@ function callObservable(subscriberMethod, callback) {
 }
 
 function getChartData(period) {
-    // const chartData = callObservable(getCategoryPieData(), (response)=> {
-    //     return response;
+    // const chartData = callObservable(getDateLineData(period), (response)=> {
+    //     return JSON.parse(response);
     // });
     const chartData = getDateLineData(period);
-    console.log("Chart Data: ")
-    console.log(chartData)
+    console.log("Chart Data: ", chartData)
     return chartData
 }
 
-function CategoryPie(props) {
+function DateLine(props) {
     const classes = useStyles()
 
     const {user} = useSelector(state => state.auth)
 
-    const chartData = getChartData(7);
+    const chartData = getChartData(90);
 
     return (
         <Card>
-            <Chart maxWidth="xs" data={chartData} className={classes.chart}>
+            <Chart data={getDateLineData} className={classes.chart}>
                 <ArgumentAxis tickFormat={format} />
-                <ValueAxis
-                    max={50}
-                    labelComponent={ValueLabel}
-                />
+                <ValueAxis />
                 <LineSeries
                     name="Spending"
-                    valueField="Sum"
-                    argumentField="Date"
+                    valueField="sum"
+                    argumentField="date"
                 />
                 <Title text="Spending over Time Period" />
                 <Animation />
@@ -83,4 +81,4 @@ function CategoryPie(props) {
     )
 }
 
-export default CategoryPie
+export default DateLine;

@@ -75,7 +75,7 @@ function Navbar(props) {
                         &nbsp;
 
                         <Button component={Link} variant="text" to="/" className={classes.link}>
-                            <AssessmentIcon />Expenses
+                            <AssessmentIcon />Xpenses
                         </Button>
                     </Typography>
 
