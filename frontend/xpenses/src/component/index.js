@@ -25,22 +25,40 @@ import {BrowserRouter as Router, Link, Route, Switch, useHistory} from "react-ro
 import {useDispatch, useSelector} from "react-redux"
 import { makeStyles } from '@material-ui/core';
 import { CssBaseline } from '@material-ui/core';
+import { Card } from '@material-ui/core';
 import NavBar from "./Navbar"
+import {
+    PieSeries,
+    Chart,
+    Title,
+    ArgumentAxis,
+    ValueAxis,
+    LineSeries,
+    BarSeries
+} from '@devexpress/dx-react-chart-material-ui';
+import { Animation } from '@devexpress/dx-react-chart'
 
 export {
+    Animation,
     AppBar,
+    ArgumentAxis,
     Avatar,
+    BarSeries,
     Box,
     Button,
+    Card,
+    Chart,
     Checkbox,
     Container,
     CssBaseline,
     FormControl,
     FormLabel,
     Grid,
+    LineSeries,
     Link,
     makeStyles,
     Paper,
+    PieSeries,
     Radio,
     RadioGroup,
     React,
@@ -55,6 +73,7 @@ export {
     TableHead,
     TableRow,
     TextField,
+    Title,
     Typography,
     ToolBar,
     NavBar,
@@ -62,5 +81,6 @@ export {
     useEffect,
     useHistory,
     useState,
-    useSelector
+    useSelector,
+    ValueAxis
 }

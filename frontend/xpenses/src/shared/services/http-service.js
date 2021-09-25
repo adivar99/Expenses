@@ -8,7 +8,7 @@ const token = null;
 function setToken(token) {
 
     if (token){
-        console.log("setting token" , token)
+        console.log("setting token:" , token)
         axios.defaults.headers.common['Authorization'] = "Bearer " + token;
     }
     else

@@ -10,6 +10,7 @@ import Login from './auth/Login';
 import { Redirect } from 'react-router-dom';
 import AppNotificationComponent from './shared/notification/app-notification-component';
 import Profile from './profile/Profile';
+import Dashboard from './dashboard/Dashboard';
 
 const useStyles = makeStyles((theme) => ({
 
@@ -39,7 +40,7 @@ function App() {
     let homePage = "/login"
 
     if(isLoggedIn)
-        homePage = "/register"
+        homePage = "/profile"
     
     useEffect(() => {
         if(token && user){
@@ -59,6 +60,7 @@ function App() {
                 <Register />
             </Route>
             <GuardedRoute path="/profile" component={Profile} auth={isLoggedIn} />
+            <GuardedRoute path="/dashboard" component={Dashboard} auth={isLoggedIn} />
             <Route path="/">
                 <Redirect to={homePage} />
             </Route>

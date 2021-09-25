@@ -1,3 +1,4 @@
+from typing import Union
 from pydantic import BaseModel, Field
 from datetime import date as datetime_date
 
@@ -25,3 +26,10 @@ class ExpenseInDB(ExpenseBase):
 
 class Expense(ExpenseBase):
     pass
+
+class ExpenseByCategory(BaseModel):
+    category: str
+    sum: float
+
+    class Config:
+        orm_mode: True

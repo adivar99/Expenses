@@ -3,7 +3,7 @@ import http from "../shared/services/http-service.js";
 import {concatMap, map} from "rxjs/operators";
 import { LOGOUT } from "./authStore";
 import { getAsUser } from "./user";
-import { appNotification } from "../shared/notification/app-notification";
+// import { appNotification } from "../shared/notification/app-notification";
 
 export const doLogin = (loginRequest) => {
 
@@ -14,10 +14,10 @@ export const doLogin = (loginRequest) => {
         );
 }
 
-export const getToken = (loginReqeust) => {
+export const getToken = (loginRequest) => {
     const url = environment.baseUrl + "/auth/login"
 
-    return http.post(url, loginReqeust)
+    return http.post(url, loginRequest)
         .pipe(
             map((response) => {
                 return response.token
